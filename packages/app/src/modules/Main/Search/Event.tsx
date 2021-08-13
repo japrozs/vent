@@ -1,5 +1,6 @@
+import { useApolloClient } from "@apollo/client";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Image, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { constants, emptyIcon } from "../../../constants";
@@ -38,41 +39,52 @@ export const Event: React.FC<SearchStackNav<"Event">> = ({
         },
     });
     return (
-        <View>
-            <Image
-                style={styles.bg}
-                source={{ uri: data?.getEvent?.imgUrl || emptyIcon }}
-            />
-            <View style={styles.container}>
-                <Text
-                    style={[
-                        globalStyles.heading,
-                        { fontWeight: "700", fontSize: 35 },
-                    ]}
-                >
-                    {data?.getEvent?.name}
-                </Text>
-                <Text style={styles.description}>
-                    {data?.getEvent?.tagLine}
-                </Text>
-                <View style={globalStyles.flex}>
-                    <Text style={styles.createdAt}>
-                        Created by{" "}
-                        <Text style={{ fontWeight: "600" }}>
-                            {user?.getUser?.username}
-                        </Text>{" "}
-                        on{" "}
-                        <Text style={{ fontWeight: "600" }}>
-                            {new Date(
-                                parseInt(data?.getEvent?.createdAt || "")
-                            ).toLocaleDateString()}
-                        </Text>
+        <ScrollView>
+            <View>
+                <Image
+                    style={styles.bg}
+                    source={{ uri: data?.getEvent?.imgUrl || emptyIcon }}
+                />
+                <View style={styles.container}>
+                    <Text
+                        style={[
+                            globalStyles.heading,
+                            { fontWeight: "700", fontSize: 35 },
+                        ]}
+                    >
+                        {data?.getEvent?.name}
                     </Text>
+                    <Text style={styles.description}>
+                        {data?.getEvent?.tagLine}
+                    </Text>
+                    <View style={globalStyles.flex}>
+                        <Text style={styles.createdAt}>
+                            Created by{" "}
+                            <Text style={{ fontWeight: "600" }}>
+                                {user?.getUser?.username}
+                            </Text>{" "}
+                            on{" "}
+                            <Text style={{ fontWeight: "600" }}>
+                                {new Date(
+                                    parseInt(data?.getEvent?.createdAt || "")
+                                ).toLocaleDateString()}
+                            </Text>
+                        </Text>
+                    </View>
                 </View>
-
-                <ScrollView style={{ marginTop: 30 }}>
-                    {posts?.getEventPosts?.map((post) => (
+                <View
+                    style={{
+                        padding: layout.padding,
+                    }}
+                >
+                    <TouchableOpacity style={globalStyles.button}>
+                        <Text style={styles.buttonText}>Create new post</Text>
+                    </TouchableOpacity>
+                </View>
+                <View>
+                    {posts?.getEventPosts?.map((post, i) => (
                         <PostCard
+                            isFirst={i == 0}
                             navigation={navigation}
                             key={post.id}
                             date={new Date(parseInt(post.createdAt)).toString()}
@@ -81,15 +93,14 @@ export const Event: React.FC<SearchStackNav<"Event">> = ({
                             description={post.body}
                         />
                     ))}
-                </ScrollView>
+                </View>
             </View>
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        height: "100%",
         padding: layout.padding,
     },
     bg: {
@@ -107,5 +118,11 @@ const styles = StyleSheet.create({
         color: colors.gray,
         fontSize: 18,
         marginTop: 4,
+    },
+    buttonText: {
+        color: "#fff",
+        textAlign: "center",
+        fontSize: 18,
+        fontWeight: "500",
     },
 });

@@ -26,13 +26,7 @@ export const Login: React.FC<AuthStackNav<"Login">> = ({ navigation }) => {
     const [password, setPassword] = useState("");
     const [login, { loading }] = useLoginMutation();
 
-    const disabled =
-        usernameOrEmail.trim().length == 0 || password.trim().length == 0;
-
     const handleSubmit = async () => {
-        if (disabled) {
-            return;
-        }
         const response = await login({
             variables: {
                 usernameOrEmail,
@@ -109,14 +103,7 @@ export const Login: React.FC<AuthStackNav<"Login">> = ({ navigation }) => {
                 <></>
             )}
             <TouchableOpacity
-                style={[
-                    globalStyles.button,
-                    disabled
-                        ? {
-                              opacity: 0.6,
-                          }
-                        : {},
-                ]}
+                style={[globalStyles.button]}
                 onPress={handleSubmit}
             >
                 <Text style={styles.buttonText}>Log In</Text>

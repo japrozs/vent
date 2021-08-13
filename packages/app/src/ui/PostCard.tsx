@@ -21,6 +21,7 @@ interface PostCardProps {
     title: string;
     description: string;
     date: string;
+    isFirst: boolean;
     navigation: BottomTabNavigationProp<SearchStackParamList, "Event">;
 }
 
@@ -30,6 +31,7 @@ export const PostCard: React.FC<PostCardProps> = ({
     description,
     navigation,
     date,
+    isFirst,
 }) => {
     const { data, loading } = useGetUserQuery({
         variables: {
@@ -50,7 +52,17 @@ export const PostCard: React.FC<PostCardProps> = ({
                 });
             }}
         >
-            <View style={styles.card}>
+            <View
+                style={[
+                    styles.card,
+                    isFirst
+                        ? {
+                              borderTopColor: colors.borderGray,
+                              borderTopWidth: 0.5,
+                          }
+                        : {},
+                ]}
+            >
                 <View style={globalStyles.flex}>
                     <Image
                         style={styles.img}
@@ -77,7 +89,11 @@ export const PostCard: React.FC<PostCardProps> = ({
 const styles = StyleSheet.create({
     card: {
         paddingVertical: 12,
-        marginBottom: 25,
+        paddingBottom: layout.paddingVertical,
+        paddingTop: layout.paddingVertical,
+        borderBottomColor: colors.borderGray,
+        borderBottomWidth: 0.5,
+        padding: layout.padding,
     },
     time: {
         color: colors.purple,

@@ -10,11 +10,13 @@ export const colors = {
     red: "#DC2626",
     lightGray: "#4A5568",
     dogeBlack: "#0B0E11",
+    borderGray: "#9f9f9f",
 };
 export const layout = {
     iconSize: 30,
     borderRadius: 4,
     padding: 13,
+    paddingVertical: 25,
 };
 
 export const globalStyles = StyleSheet.create({

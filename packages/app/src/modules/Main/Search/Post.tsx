@@ -32,7 +32,7 @@ export const Post: React.FC<SearchStackNav<"Post">> = ({ route }) => {
                     }}
                 />
                 <Text style={styles.username}>
-                    {userData?.getUser?.username} {"  "}•{"  "}
+                    {userData?.getUser?.username}
                 </Text>
                 <Text style={styles.time}>
                     {timeSince(

@@ -62,6 +62,9 @@ export class EventResolver {
     @UseMiddleware(isAuth)
     @Query(() => [Post], { nullable: true })
     async getEventPosts(@Arg("id", () => Int) id: number) {
-        return Post.find({ where: { eventId: id } });
+        return Post.find({
+            where: { eventId: id },
+            order: { createdAt: "DESC" },
+        });
     }
 }

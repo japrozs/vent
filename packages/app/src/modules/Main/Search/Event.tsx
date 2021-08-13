@@ -88,10 +88,12 @@ export const Event: React.FC<SearchStackNav<"Event">> = ({
                         <Text style={styles.buttonText}>Create new post</Text>
                     </TouchableOpacity>
                 </View>
-                <View>
+                <View style={{ padding: layout.padding }}>
                     {posts?.getEventPosts?.map((post, i) => (
                         <PostCard
                             isFirst={i == 0}
+                            showBorder={false}
+                            addPadding={true}
                             navigation={navigation}
                             key={post.id}
                             date={new Date(parseInt(post.createdAt)).toString()}

@@ -129,6 +129,9 @@ export const MainStack: React.FC<MainStackProps> = ({}) => {
                 }}
                 name="Profile"
                 component={Profile}
+                initialParams={{
+                    userId: data?.me?.id,
+                }}
             />
         </Tab.Navigator>
     );

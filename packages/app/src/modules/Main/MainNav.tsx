@@ -8,9 +8,13 @@ export type MainStackParamList = {
         params: {
             postId?: number;
             userId?: number;
+            eventId?: number;
+            name?: string;
         };
     };
-    Profile: undefined;
+    Profile: {
+        userId: number;
+    };
     NewEvent: undefined;
 };
 

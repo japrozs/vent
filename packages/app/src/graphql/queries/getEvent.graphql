@@ -1,6 +1,5 @@
 query getEvent($id: Int!) {
     getEvent(id: $id) {
-        id
-        name
+        ...RegularEvent
     }
 }

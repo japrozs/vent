@@ -9,6 +9,7 @@ export const colors = {
     gray: "#4B5563",
     red: "#DC2626",
     lightGray: "#4A5568",
+    dogeBlack: "#0B0E11",
 };
 export const layout = {
     iconSize: 30,

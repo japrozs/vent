@@ -5,6 +5,7 @@ import {
     Arg,
     Ctx,
     Field,
+    Int,
     Mutation,
     ObjectType,
     Query,
@@ -51,5 +52,11 @@ export class PostResolver {
     @Query(() => [Post], { nullable: true })
     async getAllPosts() {
         return Post.find({ order: { createdAt: "DESC" } });
+    }
+
+    @UseMiddleware(isAuth)
+    @Query(() => Post, { nullable: true })
+    async getPost(@Arg("id", () => Int) id: number) {
+        return Post.findOne(id);
     }
 }

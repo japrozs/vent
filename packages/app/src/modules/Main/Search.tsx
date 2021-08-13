@@ -5,6 +5,9 @@ import { MainStackNav } from "./MainNav";
 import { SearchStackParamList } from "./SearchNav";
 import { SearchPage } from "./Search/SearchPage";
 import { UserProfile } from "./Search/UserProfile";
+import { Text } from "react-native";
+import { useGetEventQuery } from "../../generated/graphql";
+import { Post } from "./Search/Post";
 
 interface SearchProps {}
 
@@ -21,7 +24,14 @@ export const Search: React.FC<MainStackNav<"Search">> = ({ navigation }) => {
                 component={SearchPage}
             />
             <Stack.Screen name={"UserProfile"} component={UserProfile} />
-            <Stack.Screen name={"Event"} component={Event} />
+            <Stack.Screen
+                options={({ route }) => ({
+                    headerTitle: route.params.name,
+                })}
+                name={"Event"}
+                component={Event}
+            />
+            <Stack.Screen name={"Post"} component={Post} />
         </Stack.Navigator>
     );
 };

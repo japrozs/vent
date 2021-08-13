@@ -11,19 +11,20 @@ import {
 } from "../generated/graphql";
 import { emptyIcon } from "../constants";
 import { truncate } from "../utils/truncate";
-import { MainStackParamList } from "../modules/Main/MainNav";
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { MainStackParamList } from "../modules/Main/MainNav";
+import { SearchStackParamList } from "../modules/Main/SearchNav";
 
-interface CardProps {
+interface PostCardProps {
     post: any;
     title: string;
     description: string;
     date: string;
-    navigation: BottomTabNavigationProp<MainStackParamList, "Home">;
+    navigation: BottomTabNavigationProp<SearchStackParamList, "Event">;
 }
 
-export const Card: React.FC<CardProps> = ({
+export const PostCard: React.FC<PostCardProps> = ({
     post,
     title,
     description,
@@ -44,11 +45,8 @@ export const Card: React.FC<CardProps> = ({
     return (
         <TouchableOpacity
             onPress={() => {
-                navigation.navigate("Search", {
-                    screen: "Post",
-                    params: {
-                        postId: post.id,
-                    },
+                navigation.navigate("Post", {
+                    postId: post.id,
                 });
             }}
         >
@@ -60,17 +58,12 @@ export const Card: React.FC<CardProps> = ({
                             uri: data ? data.getUser?.imgUrl : emptyIcon,
                         }}
                     />
-                    <View style={[globalStyles.flex, { alignItems: "center" }]}>
-                        <Text style={styles.username}>
-                            {data?.getUser?.username} {"  "}•{"  "}
-                        </Text>
-                        <Text style={[styles.eventName, { marginTop: 4 }]}>
-                            {d?.getEvent?.name}
-                        </Text>
-                    </View>
+                    <Text style={styles.username}>
+                        {data?.getUser?.username}
+                    </Text>
                     <Text style={styles.time}>{timeSince(date)}</Text>
                 </View>
-                <Text style={[globalStyles.heading, { marginTop: 10 }]}>
+                <Text style={[globalStyles.heading, { marginTop: 2 }]}>
                     {title}
                 </Text>
                 <Text style={styles.description}>

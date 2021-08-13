@@ -3,15 +3,14 @@ import { RouteProp } from "@react-navigation/native";
 
 export type MainStackParamList = {
     Home: undefined;
-    Search: undefined;
+    Search: {
+        screen: string;
+        params: {
+            postId: number;
+        };
+    };
     Profile: undefined;
     NewEvent: undefined;
-    Event: {
-        eventId: number;
-    };
-    UserProfile: {
-        userId: number;
-    };
 };
 
 export type MainStackNav<RouteName extends keyof MainStackParamList> = {

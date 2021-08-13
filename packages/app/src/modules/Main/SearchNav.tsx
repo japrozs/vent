@@ -8,6 +8,10 @@ export type SearchStackParamList = {
     };
     Event: {
         eventId: number;
+        name: string;
+    };
+    Post: {
+        postId: number;
     };
 };
 

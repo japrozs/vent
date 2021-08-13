@@ -15,6 +15,7 @@ import {
 import { Context } from "../types";
 import { EventInput } from "./EventInput";
 import { FieldError } from "./user";
+import { Post } from "../entities/Post";
 
 @ObjectType()
 class EventResponse {
@@ -49,12 +50,18 @@ export class EventResolver {
     @UseMiddleware(isAuth)
     @Query(() => Event, { nullable: true })
     async getEvent(@Arg("id", () => Int) id: number) {
-        return Event.findOne({ where: { id }});
+        return Event.findOne({ where: { id } });
     }
 
     @UseMiddleware(isAuth)
     @Query(() => [Event])
     async getAllEvents() {
-        return Event.find({order : { createdAt : "DESC"}});
+        return Event.find({ order: { createdAt: "DESC" } });
+    }
+
+    @UseMiddleware(isAuth)
+    @Query(() => [Post], { nullable: true })
+    async getEventPosts(@Arg("id", () => Int) id: number) {
+        return Post.find({ where: { eventId: id } });
     }
 }

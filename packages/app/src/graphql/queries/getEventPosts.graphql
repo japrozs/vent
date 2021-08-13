@@ -1,0 +1,5 @@
+query getEventPosts($id: Int!) {
+    getEventPosts(id: $id) {
+        ...RegularPost
+    }
+}

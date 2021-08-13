@@ -118,7 +118,9 @@ export type Query = {
   getAllUsers?: Maybe<Array<User>>;
   getEvent?: Maybe<Event>;
   getAllEvents: Array<Event>;
+  getEventPosts?: Maybe<Array<Post>>;
   getAllPosts?: Maybe<Array<Post>>;
+  getPost?: Maybe<Post>;
 };
 
 
@@ -128,6 +130,16 @@ export type QueryGetUserArgs = {
 
 
 export type QueryGetEventArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryGetEventPostsArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryGetPostArgs = {
   id: Scalars['Int'];
 };
 
@@ -158,6 +170,8 @@ export type UsernamePasswordInput = {
 export type RegularErrorFragment = { __typename?: 'FieldError', field: string, message: string };
 
 export type RegularEventFragment = { __typename?: 'Event', id: number, name: string, imgUrl: string, tagLine: string, description: string, creatorId: number, createdAt: string };
+
+export type RegularPostFragment = { __typename?: 'Post', id: number, title: string, body: string, creatorId: number, eventId: number, createdAt: string, updatedAt: string };
 
 export type RegularUserFragment = { __typename?: 'User', id: number, username: string, name: string, email: string, imgUrl: string };
 
@@ -210,7 +224,21 @@ export type GetEventQueryVariables = Exact<{
 }>;
 
 
-export type GetEventQuery = { __typename?: 'Query', getEvent?: Maybe<{ __typename?: 'Event', id: number, name: string }> };
+export type GetEventQuery = { __typename?: 'Query', getEvent?: Maybe<{ __typename?: 'Event', id: number, name: string, imgUrl: string, tagLine: string, description: string, creatorId: number, createdAt: string }> };
+
+export type GetEventPostsQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetEventPostsQuery = { __typename?: 'Query', getEventPosts?: Maybe<Array<{ __typename?: 'Post', id: number, title: string, body: string, creatorId: number, eventId: number, createdAt: string, updatedAt: string }>> };
+
+export type GetPostQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetPostQuery = { __typename?: 'Query', getPost?: Maybe<{ __typename?: 'Post', id: number, title: string, body: string, creatorId: number, eventId: number, createdAt: string, updatedAt: string }> };
 
 export type GetUserQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -233,6 +261,17 @@ export const RegularEventFragmentDoc = gql`
   description
   creatorId
   createdAt
+}
+    `;
+export const RegularPostFragmentDoc = gql`
+    fragment RegularPost on Post {
+  id
+  title
+  body
+  creatorId
+  eventId
+  createdAt
+  updatedAt
 }
     `;
 export const RegularErrorFragmentDoc = gql`
@@ -514,11 +553,10 @@ export type GetAllUsersQueryResult = Apollo.QueryResult<GetAllUsersQuery, GetAll
 export const GetEventDocument = gql`
     query getEvent($id: Int!) {
   getEvent(id: $id) {
-    id
-    name
+    ...RegularEvent
   }
 }
-    `;
+    ${RegularEventFragmentDoc}`;
 
 /**
  * __useGetEventQuery__
@@ -547,6 +585,76 @@ export function useGetEventLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
 export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery>;
 export type GetEventQueryResult = Apollo.QueryResult<GetEventQuery, GetEventQueryVariables>;
+export const GetEventPostsDocument = gql`
+    query getEventPosts($id: Int!) {
+  getEventPosts(id: $id) {
+    ...RegularPost
+  }
+}
+    ${RegularPostFragmentDoc}`;
+
+/**
+ * __useGetEventPostsQuery__
+ *
+ * To run a query within a React component, call `useGetEventPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventPostsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetEventPostsQuery(baseOptions: Apollo.QueryHookOptions<GetEventPostsQuery, GetEventPostsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEventPostsQuery, GetEventPostsQueryVariables>(GetEventPostsDocument, options);
+      }
+export function useGetEventPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventPostsQuery, GetEventPostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEventPostsQuery, GetEventPostsQueryVariables>(GetEventPostsDocument, options);
+        }
+export type GetEventPostsQueryHookResult = ReturnType<typeof useGetEventPostsQuery>;
+export type GetEventPostsLazyQueryHookResult = ReturnType<typeof useGetEventPostsLazyQuery>;
+export type GetEventPostsQueryResult = Apollo.QueryResult<GetEventPostsQuery, GetEventPostsQueryVariables>;
+export const GetPostDocument = gql`
+    query getPost($id: Int!) {
+  getPost(id: $id) {
+    ...RegularPost
+  }
+}
+    ${RegularPostFragmentDoc}`;
+
+/**
+ * __useGetPostQuery__
+ *
+ * To run a query within a React component, call `useGetPostQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPostQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPostQuery(baseOptions: Apollo.QueryHookOptions<GetPostQuery, GetPostQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
+      }
+export function useGetPostLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostQuery, GetPostQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
+        }
+export type GetPostQueryHookResult = ReturnType<typeof useGetPostQuery>;
+export type GetPostLazyQueryHookResult = ReturnType<typeof useGetPostLazyQuery>;
+export type GetPostQueryResult = Apollo.QueryResult<GetPostQuery, GetPostQueryVariables>;
 export const GetUserDocument = gql`
     query getUser($id: Int!) {
   getUser(id: $id) {

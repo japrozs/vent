@@ -9,16 +9,18 @@ import {
 } from "../../generated/graphql";
 import { Card } from "../../ui/Card";
 import { layout, colors } from "../../ui/theme";
+import { MainStackNav } from "./MainNav";
 
 interface MainProps {}
 
-export const Main: React.FC<MainProps> = ({}) => {
+export const Main: React.FC<MainStackNav<"Home">> = ({ navigation }) => {
     const { data, loading } = useGetAllPostsQuery();
     return (
         <View style={styles.container}>
             {data ? (
                 data.getAllPosts?.map((post) => (
                     <Card
+                        navigation={navigation}
                         key={post.id}
                         date={new Date(parseInt(post.createdAt)).toString()}
                         post={post}

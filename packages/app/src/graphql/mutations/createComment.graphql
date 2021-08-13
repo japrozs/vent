@@ -1,0 +1,5 @@
+mutation createComment($id: Int!, $comment: String!) {
+    createComment(id: $id, comment: $comment) {
+        ...RegularComment
+    }
+}

@@ -14,6 +14,17 @@ export type Scalars = {
   Float: number;
 };
 
+export type Comment = {
+  __typename?: 'Comment';
+  id: Scalars['Float'];
+  creatorId: Scalars['Float'];
+  body: Scalars['String'];
+  postId: Scalars['Float'];
+  post: Post;
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+};
+
 export type Event = {
   __typename?: 'Event';
   id: Scalars['Float'];
@@ -54,6 +65,7 @@ export type Mutation = {
   logout?: Maybe<Scalars['Boolean']>;
   createEvent: EventResponse;
   createPost?: Maybe<PostResponse>;
+  createComment?: Maybe<Comment>;
 };
 
 
@@ -86,6 +98,12 @@ export type MutationCreateEventArgs = {
 
 export type MutationCreatePostArgs = {
   options: PostInput;
+};
+
+
+export type MutationCreateCommentArgs = {
+  comment: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 export type Post = {
@@ -123,6 +141,7 @@ export type Query = {
   getAllPosts?: Maybe<Array<Post>>;
   getPost?: Maybe<Post>;
   getUserPosts?: Maybe<Array<Post>>;
+  getPostComments?: Maybe<Array<Comment>>;
 };
 
 
@@ -155,6 +174,11 @@ export type QueryGetUserPostsArgs = {
   id: Scalars['Int'];
 };
 
+
+export type QueryGetPostCommentsArgs = {
+  id: Scalars['Int'];
+};
+
 export type User = {
   __typename?: 'User';
   id: Scalars['Float'];
@@ -179,6 +203,8 @@ export type UsernamePasswordInput = {
   password: Scalars['String'];
 };
 
+export type RegularCommentFragment = { __typename?: 'Comment', id: number, creatorId: number, postId: number, body: string, createdAt: string };
+
 export type RegularErrorFragment = { __typename?: 'FieldError', field: string, message: string };
 
 export type RegularEventFragment = { __typename?: 'Event', id: number, name: string, imgUrl: string, tagLine: string, description: string, creatorId: number, createdAt: string };
@@ -188,6 +214,14 @@ export type RegularPostFragment = { __typename?: 'Post', id: number, title: stri
 export type RegularUserFragment = { __typename?: 'User', id: number, username: string, name: string, email: string, imgUrl: string };
 
 export type RegularUserResponseFragment = { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, name: string, email: string, imgUrl: string }> };
+
+export type CreateCommentMutationVariables = Exact<{
+  id: Scalars['Int'];
+  comment: Scalars['String'];
+}>;
+
+
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: Maybe<{ __typename?: 'Comment', id: number, creatorId: number, postId: number, body: string, createdAt: string }> };
 
 export type CreateEventMutationVariables = Exact<{
   options: EventInput;
@@ -259,6 +293,13 @@ export type GetPostQueryVariables = Exact<{
 
 export type GetPostQuery = { __typename?: 'Query', getPost?: Maybe<{ __typename?: 'Post', id: number, title: string, body: string, creatorId: number, eventId: number, createdAt: string, updatedAt: string }> };
 
+export type GetPostCommentsQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetPostCommentsQuery = { __typename?: 'Query', getPostComments?: Maybe<Array<{ __typename?: 'Comment', id: number, creatorId: number, body: string, createdAt: string }>> };
+
 export type GetUserQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -285,6 +326,15 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: number, username: string, name: string, email: string, imgUrl: string }> };
 
+export const RegularCommentFragmentDoc = gql`
+    fragment RegularComment on Comment {
+  id
+  creatorId
+  postId
+  body
+  createdAt
+}
+    `;
 export const RegularEventFragmentDoc = gql`
     fragment RegularEvent on Event {
   id
@@ -333,6 +383,40 @@ export const RegularUserResponseFragmentDoc = gql`
 }
     ${RegularErrorFragmentDoc}
 ${RegularUserFragmentDoc}`;
+export const CreateCommentDocument = gql`
+    mutation createComment($id: Int!, $comment: String!) {
+  createComment(id: $id, comment: $comment) {
+    ...RegularComment
+  }
+}
+    ${RegularCommentFragmentDoc}`;
+export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
+
+/**
+ * __useCreateCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      comment: // value for 'comment'
+ *   },
+ * });
+ */
+export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommentMutation, CreateCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, options);
+      }
+export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
+export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
+export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
 export const CreateEventDocument = gql`
     mutation createEvent($options: EventInput!) {
   createEvent(options: $options) {
@@ -730,6 +814,44 @@ export function useGetPostLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetPostQueryHookResult = ReturnType<typeof useGetPostQuery>;
 export type GetPostLazyQueryHookResult = ReturnType<typeof useGetPostLazyQuery>;
 export type GetPostQueryResult = Apollo.QueryResult<GetPostQuery, GetPostQueryVariables>;
+export const GetPostCommentsDocument = gql`
+    query getPostComments($id: Int!) {
+  getPostComments(id: $id) {
+    id
+    creatorId
+    body
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useGetPostCommentsQuery__
+ *
+ * To run a query within a React component, call `useGetPostCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPostCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPostCommentsQuery(baseOptions: Apollo.QueryHookOptions<GetPostCommentsQuery, GetPostCommentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPostCommentsQuery, GetPostCommentsQueryVariables>(GetPostCommentsDocument, options);
+      }
+export function useGetPostCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostCommentsQuery, GetPostCommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPostCommentsQuery, GetPostCommentsQueryVariables>(GetPostCommentsDocument, options);
+        }
+export type GetPostCommentsQueryHookResult = ReturnType<typeof useGetPostCommentsQuery>;
+export type GetPostCommentsLazyQueryHookResult = ReturnType<typeof useGetPostCommentsLazyQuery>;
+export type GetPostCommentsQueryResult = Apollo.QueryResult<GetPostCommentsQuery, GetPostCommentsQueryVariables>;
 export const GetUserDocument = gql`
     query getUser($id: Int!) {
   getUser(id: $id) {

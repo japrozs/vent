@@ -1,31 +1,22 @@
+import {} from "formik";
 import { Field, ObjectType } from "type-graphql";
 import {
+    BaseEntity,
     Column,
     CreateDateColumn,
     Entity,
-    BaseEntity,
+    ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
-    ManyToOne,
-    OneToMany,
 } from "typeorm";
-import { Comment } from "./Comment";
-import { Event } from "./Event";
+import { Post } from "./Post";
 
 @ObjectType()
 @Entity()
-export class Post extends BaseEntity {
+export class Comment extends BaseEntity {
     @Field()
     @PrimaryGeneratedColumn()
     id!: number;
-
-    @Field()
-    @Column()
-    title: string;
-
-    @Field()
-    @Column()
-    body: string;
 
     @Field()
     @Column()
@@ -33,13 +24,15 @@ export class Post extends BaseEntity {
 
     @Field()
     @Column()
-    eventId: number;
+    body: string;
 
-    @ManyToOne(() => Event, (event) => event.posts)
-    event: Event;
+    @Field()
+    @Column()
+    postId: number;
 
-    @OneToMany(() => Comment, (comment) => comment.post)
-    comments: Comment[];
+    @Field(() => Post)
+    @ManyToOne(() => Post, (post) => post.comments, { nullable: false })
+    post: Post;
 
     @Field(() => String)
     @CreateDateColumn()

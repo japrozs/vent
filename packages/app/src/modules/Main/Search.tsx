@@ -18,7 +18,6 @@ export const Search: React.FC<SearchProps> = ({}) => {
     const { data: d, loading: fetching } = useGetAllUsersQuery();
 
     const [searchQuery, setSearchQuery] = useState("");
-
     return (
         <View>
             <View style={styles.container}>
@@ -42,7 +41,7 @@ export const Search: React.FC<SearchProps> = ({}) => {
                         <ResultCard key={result.id} result={result} />
                     ))
                 ) : (
-                    <Text>No search results found</Text>
+                    <Text>no results found</Text>
                 )}
             </View>
         </View>

@@ -1,0 +1,10 @@
+query getAllPosts {
+    getAllPosts {
+        id
+        title
+        body
+        eventId
+        creatorId
+        createdAt
+    }
+}

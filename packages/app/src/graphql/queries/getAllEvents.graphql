@@ -1,0 +1,5 @@
+query getAllEvents {
+    getAllEvents {
+        ...RegularEvent
+    }
+}

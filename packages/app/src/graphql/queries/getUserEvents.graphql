@@ -1,0 +1,5 @@
+query getUserEvents($id: Int!) {
+    getUserEvents(id: $id) {
+        ...RegularEvent
+    }
+}

@@ -5,6 +5,7 @@ export type SearchStackParamList = {
     SearchPage: undefined;
     UserProfile: {
         userId: number;
+        name: string;
     };
     Event: {
         eventId: number;

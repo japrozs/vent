@@ -24,7 +24,13 @@ export const Search: React.FC<MainStackNav<"Search">> = ({ navigation }) => {
                 name={"SearchPage"}
                 component={SearchPage}
             />
-            <Stack.Screen name={"UserProfile"} component={UserProfile} />
+            <Stack.Screen
+                options={({ route }) => ({
+                    headerTitle: route.params.name,
+                })}
+                name={"UserProfile"}
+                component={UserProfile}
+            />
             <Stack.Screen
                 options={({ route }) => ({
                     headerTitle: route.params.name,

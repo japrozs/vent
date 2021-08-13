@@ -67,4 +67,13 @@ export class EventResolver {
             order: { createdAt: "DESC" },
         });
     }
+
+    @UseMiddleware(isAuth)
+    @Query(() => [Event], { nullable: true })
+    async getUserEvents(@Arg("id", () => Int!) id: number) {
+        return Event.find({
+            where: { creatorId: id },
+            order: { createdAt: "DESC" },
+        });
+    }
 }

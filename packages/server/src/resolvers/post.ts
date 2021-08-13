@@ -59,4 +59,13 @@ export class PostResolver {
     async getPost(@Arg("id", () => Int) id: number) {
         return Post.findOne(id);
     }
+
+    @UseMiddleware(isAuth)
+    @Query(() => [Post], { nullable: true })
+    async getUserPosts(@Arg("id", () => Int!) id: number) {
+        return Post.find({
+            where: { creatorId: id },
+            order: { createdAt: "DESC" },
+        });
+    }
 }

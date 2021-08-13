@@ -7,7 +7,7 @@ import { truncate } from "../utils/truncate";
 import { MainStackParamList } from "../modules/Main/MainNav";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { SearchStackParamList } from "../modules/Main/SearchNav";
-import { useGetEventQuery } from "../generated/graphql";
+import { useGetEventQuery, useGetUserQuery } from "../generated/graphql";
 
 interface ResultCardProps {
     result: SearchResult;
@@ -23,6 +23,13 @@ export const ResultCard: React.FC<ResultCardProps> = ({
             id: result.id,
         },
     });
+
+    const { data: user } = useGetUserQuery({
+        variables: {
+            id: result.id,
+        },
+    });
+
     return (
         <TouchableOpacity
             onPress={() => {
@@ -32,7 +39,10 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                         name: data?.getEvent?.name || "",
                     });
                 } else {
-                    navigation.navigate("UserProfile", { userId: result.id });
+                    navigation.navigate("UserProfile", {
+                        userId: result.id,
+                        name: user?.getUser?.username || "Profile",
+                    });
                 }
             }}
         >

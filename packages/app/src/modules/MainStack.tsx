@@ -63,6 +63,7 @@ export const MainStack: React.FC<MainStackProps> = ({}) => {
             />
             <Tab.Screen
                 options={{
+                    headerShown: false,
                     tabBarLabel: () => {
                         return null;
                     },

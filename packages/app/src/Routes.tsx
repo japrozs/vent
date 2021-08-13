@@ -3,6 +3,18 @@ import { NavigationContainer } from "@react-navigation/native";
 import { MainStack } from "./modules/MainStack";
 import { useMeQuery } from "./generated/graphql";
 import { AuthStack } from "./modules/AuthStack";
+import * as Linking from "expo-linking";
+
+const prefix = Linking.makeUrl("/");
+
+const linking = {
+    prefixes: [prefix],
+    config: {
+        screens: {
+            event: "event/:id",
+        },
+    },
+};
 
 export default function Routes() {
     const { data, loading } = useMeQuery();
@@ -13,5 +25,5 @@ export default function Routes() {
     } else {
         body = <AuthStack />;
     }
-    return <NavigationContainer>{body}</NavigationContainer>;
+    return <NavigationContainer linking={linking}>{body}</NavigationContainer>;
 }

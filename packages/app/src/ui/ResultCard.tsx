@@ -1,40 +1,57 @@
 import React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { SearchResult } from "../utils/search";
 import { globalStyles, colors, layout } from "../ui/theme";
 import { emptyIcon } from "../constants";
 import { truncate } from "../utils/truncate";
+import { MainStackParamList } from "../modules/Main/MainNav";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { SearchStackParamList } from "../modules/Main/SearchNav";
 
 interface ResultCardProps {
     result: SearchResult;
+    navigation: BottomTabNavigationProp<SearchStackParamList, "SearchPage">;
 }
 
-export const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
+export const ResultCard: React.FC<ResultCardProps> = ({
+    result,
+    navigation,
+}) => {
     return (
-        <View style={styles.container}>
-            <View style={globalStyles.flex}>
-                <Image
-                    style={styles.img}
-                    source={{
-                        uri: result ? result.imgUrl : emptyIcon,
-                    }}
-                />
-                {result.type == "event" ? (
-                    <View
-                        style={{
-                            marginLeft: 4,
+        <TouchableOpacity
+            onPress={() => {
+                if (result.type == "event") {
+                    navigation.navigate("Event", { eventId: result.id });
+                } else {
+                    navigation.navigate("UserProfile", { userId: result.id });
+                }
+            }}
+        >
+            <View style={styles.container}>
+                <View style={globalStyles.flex}>
+                    <Image
+                        style={styles.img}
+                        source={{
+                            uri: result ? result.imgUrl : emptyIcon,
                         }}
-                    >
-                        <Text style={styles.eventName}>{result.name}</Text>
-                        <Text style={styles.description}>
-                            {truncate(result.tagLine || "", 30)}
-                        </Text>
-                    </View>
-                ) : (
-                    <Text style={styles.username}>{result.name}</Text>
-                )}
+                    />
+                    {result.type == "event" ? (
+                        <View
+                            style={{
+                                marginLeft: 4,
+                            }}
+                        >
+                            <Text style={styles.eventName}>{result.name}</Text>
+                            <Text style={styles.description}>
+                                {truncate(result.tagLine || "", 30)}
+                            </Text>
+                        </View>
+                    ) : (
+                        <Text style={styles.username}>{result.name}</Text>
+                    )}
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 

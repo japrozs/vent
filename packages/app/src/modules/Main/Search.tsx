@@ -1,68 +1,27 @@
-import { AntDesign } from "@expo/vector-icons";
+import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import {
-    useGetAllEventsQuery,
-    useGetAllUsersQuery,
-} from "../../generated/graphql";
-import { ResultCard } from "../../ui/ResultCard";
-import { SearchInput } from "../../ui/SearchInput";
-import { colors, layout } from "../../ui/theme";
-import { search } from "../../utils/search";
+import { Event } from "./Search/Event";
+import { MainStackNav } from "./MainNav";
+import { SearchStackParamList } from "./SearchNav";
+import { SearchPage } from "./Search/SearchPage";
+import { UserProfile } from "./Search/UserProfile";
 
 interface SearchProps {}
 
-export const Search: React.FC<SearchProps> = ({}) => {
-    const { data, loading } = useGetAllEventsQuery();
-    const { data: d, loading: fetching } = useGetAllUsersQuery();
+const Stack = createStackNavigator<SearchStackParamList>();
 
-    const [searchQuery, setSearchQuery] = useState("");
+export const Search: React.FC<MainStackNav<"Search">> = ({ navigation }) => {
     return (
-        <View>
-            <View style={styles.container}>
-                <AntDesign
-                    name="search1"
-                    style={styles.icon}
-                    size={layout.iconSize - 5}
-                    color={colors.gray}
-                />
-                <TextInput
-                    value={searchQuery}
-                    onChangeText={(t) => setSearchQuery(t)}
-                    placeholder={"Search"}
-                    style={styles.input}
-                    autoCapitalize="none"
-                />
-            </View>
-            <View>
-                {searchQuery.trim().length != 0 ? (
-                    search(searchQuery, data, d).map((result) => (
-                        <ResultCard key={result.id} result={result} />
-                    ))
-                ) : (
-                    <Text>no results found</Text>
-                )}
-            </View>
-        </View>
+        <Stack.Navigator initialRouteName={"SearchPage"}>
+            <Stack.Screen
+                options={{
+                    headerTitle: "Search",
+                }}
+                name={"SearchPage"}
+                component={SearchPage}
+            />
+            <Stack.Screen name={"UserProfile"} component={UserProfile} />
+            <Stack.Screen name={"Event"} component={Event} />
+        </Stack.Navigator>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        backgroundColor: colors.wheat,
-    },
-    input: {
-        padding: 14,
-        width: "100%",
-        fontSize: 18,
-        color: "#000",
-        fontWeight: "500",
-    },
-    icon: {
-        paddingHorizontal: 10,
-    },
-});

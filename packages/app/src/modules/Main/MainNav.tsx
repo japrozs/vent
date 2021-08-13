@@ -6,6 +6,12 @@ export type MainStackParamList = {
     Search: undefined;
     Profile: undefined;
     NewEvent: undefined;
+    Event: {
+        eventId: number;
+    };
+    UserProfile: {
+        userId: number;
+    };
 };
 
 export type MainStackNav<RouteName extends keyof MainStackParamList> = {

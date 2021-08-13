@@ -151,14 +151,7 @@ export const NewEvent: React.FC<MainStackNav<"NewEvent">> = ({
                 <></>
             )}
             <TouchableOpacity
-                style={[
-                    globalStyles.button,
-                    disabled
-                        ? {
-                              opacity: 0.6,
-                          }
-                        : {},
-                ]}
+                style={[globalStyles.button]}
                 onPress={handleSubmit}
             >
                 <Text style={styles.buttonText}>Create Event</Text>

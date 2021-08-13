@@ -9,9 +9,10 @@ import { colors, layout, globalStyles } from "../ui/theme";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { useMeQuery } from "../generated/graphql";
 import { Profile } from "./Main/Profile";
-import { emptyIcon } from "../constants";
+import { constants, emptyIcon } from "../constants";
 import { NewEvent } from "./Main/NewEvent";
 import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 interface MainStackProps {}
 
@@ -23,6 +24,23 @@ export const MainStack: React.FC<MainStackProps> = ({}) => {
         <Tab.Navigator initialRouteName={"Home"}>
             <Tab.Screen
                 options={{
+                    headerLeft: () => (
+                        <Image
+                            style={styles.img}
+                            source={require("../../assets/logo.png")}
+                        />
+                    ),
+                    headerRight: () => (
+                        <Ionicons
+                            style={{
+                                marginRight: layout.padding,
+                            }}
+                            name="ios-settings-sharp"
+                            size={layout.iconSize - 5}
+                            color={colors.lightBlack}
+                        />
+                    ),
+                    headerTitle: "",
                     tabBarStyle: {
                         borderTopColor: colors.inActive,
                         borderTopWidth: 1,
@@ -115,4 +133,10 @@ export const MainStack: React.FC<MainStackProps> = ({}) => {
     );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    img: {
+        height: constants.logoHeight,
+        width: constants.logoWidth,
+        marginLeft: layout.padding,
+    },
+});

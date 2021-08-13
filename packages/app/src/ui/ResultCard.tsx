@@ -41,7 +41,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
 const styles = StyleSheet.create({
     container: {
         padding: layout.padding + 5,
-        backgroundColor: "#efefef",
+        backgroundColor: "#fff",
     },
     card: {
         paddingVertical: 12,

@@ -49,7 +49,9 @@ export const Card: React.FC<CardProps> = ({
                     <Text style={styles.username}>
                         {data?.getUser?.username} {"  "}•{"  "}
                     </Text>
-                    <Text style={styles.eventName}>{d?.getEvent?.name}</Text>
+                    <Text style={[styles.eventName, { marginTop: 4 }]}>
+                        {d?.getEvent?.name}
+                    </Text>
                 </View>
                 <Text style={styles.time}>{timeSince(date)}</Text>
             </View>

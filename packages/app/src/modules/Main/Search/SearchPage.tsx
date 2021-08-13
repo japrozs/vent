@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import React from "react";
 import { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     },
     input: {
         padding: 14,
-        width: "100%",
+        width: "75%",
         fontSize: 18,
         color: "#000",
         fontWeight: "500",

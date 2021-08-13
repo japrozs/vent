@@ -77,7 +77,14 @@ export const Event: React.FC<SearchStackNav<"Event">> = ({
                         padding: layout.padding,
                     }}
                 >
-                    <TouchableOpacity style={globalStyles.button}>
+                    <TouchableOpacity
+                        style={globalStyles.button}
+                        onPress={() => {
+                            navigation.navigate("NewPost", {
+                                eventId: data?.getEvent?.id as number,
+                            });
+                        }}
+                    >
                         <Text style={styles.buttonText}>Create new post</Text>
                     </TouchableOpacity>
                 </View>

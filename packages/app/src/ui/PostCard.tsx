@@ -76,7 +76,7 @@ export const PostCard: React.FC<PostCardProps> = ({
                     <Text style={styles.time}>{timeSince(date)}</Text>
                 </View>
                 <Text style={[globalStyles.heading, { marginTop: 2 }]}>
-                    {title}
+                    {truncate(title, 25)}
                 </Text>
                 <Text style={styles.description}>
                     {truncate(description, 122)}

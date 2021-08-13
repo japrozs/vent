@@ -2,6 +2,7 @@ import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, TextInput, Text, View } from "react-native";
 import { colors, layout } from "./theme";
+import { Entypo } from "@expo/vector-icons";
 
 interface SearchInputProps {}
 

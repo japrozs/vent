@@ -6,7 +6,8 @@ export type MainStackParamList = {
     Search: {
         screen: string;
         params: {
-            postId: number;
+            postId?: number;
+            userId?: number;
         };
     };
     Profile: undefined;

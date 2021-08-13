@@ -16,7 +16,7 @@ export const layout = {
     iconSize: 30,
     borderRadius: 4,
     padding: 13,
-    paddingVertical: 25,
+    paddingVertical: 30,
 };
 
 export const globalStyles = StyleSheet.create({

@@ -13,6 +13,9 @@ export type SearchStackParamList = {
     Post: {
         postId: number;
     };
+    NewPost: {
+        eventId: number;
+    };
 };
 
 export type SearchStackNav<RouteName extends keyof SearchStackParamList> = {

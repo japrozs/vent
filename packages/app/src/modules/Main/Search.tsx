@@ -8,6 +8,7 @@ import { UserProfile } from "./Search/UserProfile";
 import { Text } from "react-native";
 import { useGetEventQuery } from "../../generated/graphql";
 import { Post } from "./Search/Post";
+import { NewPost } from "./Search/NewPost";
 
 interface SearchProps {}
 
@@ -32,6 +33,13 @@ export const Search: React.FC<MainStackNav<"Search">> = ({ navigation }) => {
                 component={Event}
             />
             <Stack.Screen name={"Post"} component={Post} />
+            <Stack.Screen
+                options={{
+                    headerTitle: "New Post",
+                }}
+                name={"NewPost"}
+                component={NewPost}
+            />
         </Stack.Navigator>
     );
 };

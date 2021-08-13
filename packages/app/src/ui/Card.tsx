@@ -71,7 +71,7 @@ export const Card: React.FC<CardProps> = ({
                     <Text style={styles.time}>{timeSince(date)}</Text>
                 </View>
                 <Text style={[globalStyles.heading, { marginTop: 10 }]}>
-                    {title}
+                    {truncate(title, 25)}
                 </Text>
                 <Text style={styles.description}>
                     {truncate(description, 122)}

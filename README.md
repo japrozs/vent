@@ -20,6 +20,7 @@ Vent is an app that allows you to promote, advertise, and create a community aro
 ![Screenshot](/assets/5.png)
 ![Screenshot](/assets/6.png)
 ![Screenshot](/assets/7.png)
+![Screenshot](/assets/8.png)
 
 # Tech Stack
 

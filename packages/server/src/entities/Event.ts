@@ -34,7 +34,7 @@ export class Event extends BaseEntity {
     @Column()
     tagLine: string;
 
-    @OneToMany(() => Post, (post) => post.creator)
+    @OneToMany(() => Post, (post) => post.event)
     posts: Post[];
 
     @Field()

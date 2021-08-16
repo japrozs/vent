@@ -9,6 +9,7 @@ import {
     OneToMany,
 } from "typeorm";
 import { Event } from "./Event";
+import { Post } from "./Post";
 
 @ObjectType()
 @Entity()
@@ -23,6 +24,9 @@ export class User extends BaseEntity {
 
     @OneToMany(() => Event, (event) => event.creator)
     events: Event[];
+
+    @OneToMany(() => Post, (post) => post.creator)
+    posts: Post[];
 
     @Field()
     @Column({ unique: true })

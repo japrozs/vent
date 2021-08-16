@@ -11,6 +11,7 @@ import {
 } from "typeorm";
 import { Comment } from "./Comment";
 import { Event } from "./Event";
+import { User } from "./User";
 
 @ObjectType()
 @Entity()
@@ -35,8 +36,13 @@ export class Post extends BaseEntity {
     @Column()
     eventId: number;
 
+    @Field(() => Event)
     @ManyToOne(() => Event, (event) => event.posts)
     event: Event;
+
+    @Field(() => User)
+    @ManyToOne(() => User, (user) => user.posts)
+    creator: User;
 
     @OneToMany(() => Comment, (comment) => comment.post)
     comments: Comment[];

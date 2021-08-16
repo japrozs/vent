@@ -50,13 +50,16 @@ export class EventResolver {
     @UseMiddleware(isAuth)
     @Query(() => Event, { nullable: true })
     async getEvent(@Arg("id", () => Int) id: number) {
-        return Event.findOne({ where: { id } });
+        return Event.findOne({ where: { id }, relations: ["creator"] });
     }
 
     @UseMiddleware(isAuth)
     @Query(() => [Event])
     async getAllEvents() {
-        return Event.find({ order: { createdAt: "DESC" } });
+        return Event.find({
+            order: { createdAt: "DESC" },
+            relations: ["creator"],
+        });
     }
 
     @UseMiddleware(isAuth)
@@ -65,6 +68,7 @@ export class EventResolver {
         return Post.find({
             where: { eventId: id },
             order: { createdAt: "DESC" },
+            relations: ["event", "creator"],
         });
     }
 

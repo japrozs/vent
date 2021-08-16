@@ -46,8 +46,9 @@ export const MainStack: React.FC<MainStackProps> = ({}) => {
                                     backgroundColor: colors.lightLightGray,
                                     fontWeight: "500",
                                     paddingVertical: 2,
-                                    paddingHorizontal: 4,
-                                    borderRadius: 5,
+                                    textAlign: "center",
+                                    paddingHorizontal: 10,
+                                    borderRadius: 6,
                                 }}
                             >
                                 {data?.me?.username}

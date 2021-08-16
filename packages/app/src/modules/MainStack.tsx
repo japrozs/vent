@@ -38,20 +38,35 @@ export const MainStack: React.FC<MainStackProps> = ({}) => {
                         />
                     ),
                     headerRight: () => (
-                        <Text
-                            style={{
-                                marginRight: layout.padding,
-                                fontWeight: "600",
-                                fontSize: layout.iconSize - 10,
-                                color: colors.purple,
-                            }}
-                            onPress={async () => {
-                                await logout();
-                                apolloClient.resetStore();
-                            }}
-                        >
-                            Logout
-                        </Text>
+                        <View style={globalStyles.flex}>
+                            <Text
+                                style={{
+                                    fontSize: 20,
+                                    marginRight: 12,
+                                    backgroundColor: colors.lightLightGray,
+                                    fontWeight: "500",
+                                    paddingVertical: 2,
+                                    paddingHorizontal: 4,
+                                    borderRadius: 5,
+                                }}
+                            >
+                                {data?.me?.username}
+                            </Text>
+                            <Text
+                                style={{
+                                    marginRight: layout.padding,
+                                    fontWeight: "600",
+                                    fontSize: layout.iconSize - 10,
+                                    color: colors.purple,
+                                }}
+                                onPress={async () => {
+                                    await logout();
+                                    apolloClient.resetStore();
+                                }}
+                            >
+                                Logout
+                            </Text>
+                        </View>
                     ),
                     headerTitle: "",
                     tabBarStyle: {

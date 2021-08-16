@@ -116,12 +116,16 @@ const styles = StyleSheet.create({
     },
     username: {
         fontSize: 20,
-        fontWeight: "500",
+        fontWeight: "600",
         marginLeft: 10,
     },
     eventName: {
         fontSize: 16,
-        color: colors.lightGray,
-        fontWeight: "500",
+        color: colors.dogeBlack,
+        backgroundColor: colors.lightLightGray,
+        paddingVertical: 5,
+        paddingHorizontal: 5,
+        borderRadius: 6,
+        fontWeight: "600",
     },
 });

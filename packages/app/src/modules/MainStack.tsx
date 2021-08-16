@@ -7,12 +7,17 @@ import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { colors, layout, globalStyles } from "../ui/theme";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { useMeQuery } from "../generated/graphql";
+import {
+    useLoginMutation,
+    useLogoutMutation,
+    useMeQuery,
+} from "../generated/graphql";
 import { Profile } from "./Main/Profile";
 import { constants, emptyIcon } from "../constants";
 import { NewEvent } from "./Main/NewEvent";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { useApolloClient } from "@apollo/client";
 
 interface MainStackProps {}
 
@@ -20,6 +25,8 @@ const Tab = createBottomTabNavigator<MainStackParamList>();
 
 export const MainStack: React.FC<MainStackProps> = ({}) => {
     const { data, loading } = useMeQuery();
+    const [logout] = useLogoutMutation();
+    const apolloClient = useApolloClient();
     return (
         <Tab.Navigator initialRouteName={"Home"}>
             <Tab.Screen
@@ -31,14 +38,20 @@ export const MainStack: React.FC<MainStackProps> = ({}) => {
                         />
                     ),
                     headerRight: () => (
-                        <Ionicons
+                        <Text
                             style={{
                                 marginRight: layout.padding,
+                                fontWeight: "600",
+                                fontSize: layout.iconSize - 10,
+                                color: colors.purple,
                             }}
-                            name="ios-settings-sharp"
-                            size={layout.iconSize - 5}
-                            color={colors.lightBlack}
-                        />
+                            onPress={async () => {
+                                await logout();
+                                apolloClient.resetStore();
+                            }}
+                        >
+                            Logout
+                        </Text>
                     ),
                     headerTitle: "",
                     tabBarStyle: {

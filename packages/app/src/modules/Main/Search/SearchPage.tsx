@@ -49,7 +49,13 @@ export const SearchPage: React.FC<SearchStackNav<"SearchPage">> = ({
                         />
                     ))
                 ) : (
-                    <Text>no results found</Text>
+                    <Text>search something</Text>
+                )}
+                {searchQuery.trim().length != 0 &&
+                search(searchQuery, data, d).length == 0 ? (
+                    <Text>no search results found!</Text>
+                ) : (
+                    <View />
                 )}
             </View>
         </View>

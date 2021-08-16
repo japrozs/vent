@@ -25,6 +25,7 @@ Vent is an app that allows you to promote, advertise, and create a community aro
 ![Screenshot](/assets/8.png)
 
 </center>
+
 # Tech Stack
 
 ## Backend

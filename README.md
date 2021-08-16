@@ -11,6 +11,16 @@ Vent is an app that allows you to promote, advertise, and create a community aro
 | [.github](.github)        | Github settings config. (eg. `CODEOWNERS`) |
 | [.vscode](.vscode)        | Project settings for `VSCode`              |
 
+# Screenshots
+
+![Screenshot](/assets/1.png)
+![Screenshot](/assets/2.png)
+![Screenshot](/assets/3.png)
+![Screenshot](/assets/4.png)
+![Screenshot](/assets/5.png)
+![Screenshot](/assets/6.png)
+![Screenshot](/assets/7.png)
+
 # Tech Stack
 
 ## Backend

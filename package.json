@@ -1,6 +1,7 @@
 {
   "name": "root",
   "private": true,
+  "scripts" : {},
   "devDependencies": {
     "@types/nodemailer": "^6.4.4",
     "@types/uuid": "^8.3.1",
